@@ -1,59 +1,90 @@
-# gpt-npm-cli v0.1.5
 
-A npm package that uses OpenAI + Langchain to perform convenient commands in the terminal.
+# Search Workflow 使用文档
 
-## Get Started
-#
-Ensure that typescript is installed globally `npm install -g typescript`.
+`@alife/cone-gpt-wrapper` 是一个用于执行低代码搜索提示构建和执行的工作流。
 
-To get started with the project clone the repository and run `npm i & npm run build & npm install -g .` within the project root.
+## 安装
 
-Mac or Linux users may have to run `sudo` before some of these commands.
+在使用 `@alife/cone-gpt-wrapper` 之前，确保你已经安装了所需的依赖项：
 
-Calling the `gptcli` command from the command-line will run the CLI.
 
-For updates simply run `git pull & npm i & npm run build` within the project root.
+## 配置
+在你的项目中，确保以下环境变量已被正确设置：
 
-It is important to set your keys to expect full functionality. run the `gptcli config` command for more information.
+OPENAI_API_KEY=<你的OpenAI API密钥>
 
-### Example: setting the openai key
-#
-```unix
-gptcli config openai <key>
+## 使用方法
+
+import { searchWorkflow } from '@alife/cone-gpt-wrapper';
+
+### 执行搜索
+要执行搜索，你需要提供查询字符串和上下文，然后调用 runWorkflow 方法：
+
+```
+const query = '你的查询字符串';
+const context = '你的搜索上下文';
+
+searchWorkflow.runWorkflow(apiKey, query, context)
+  .then(result => {
+    console.log(result); // 输出搜索结果
+  })
+  .catch(error => {
+    console.error(error); // 打印出错信息
+  });
+
 ```
 
-## Usage
-#
-The following is a list of commands currently configured within the `gptcli`:
-- `gptcli config`: Configures environment variables required to run programs within the CLI, it is recommended that you set any required variables through this command before using the CLI.
-- `gptcli summary`: Summarizes text and webpage contents, uses map reduce to ensure no limits are encountered for the text 
-- `gptcli translate`: Translates the input text to a desired language.
-- `gptcli understand`: Parses a webpage and allows the user to ask questions about its contents in chat format.
-- `gptcli chat`: Runs a chat interface, limited to 1 step of reasoning per message.
-- `gptcli prompt`: Answers a single prompt with no history. Can perform complex multi-step reasoning.
+### 方法
+runWorkflow
+这是执行整个工作流的方法。它会自动地处理工作流节点和边的逻辑。
 
-### Environment Tools
-#
-Additional envrionment variables can be set to enabled agents with the following functionalities:
-  - Search Functionality: Provided thorugh `SerpAPI` or `ValueSerp`
-  - Live Stock Price Functionality: Provided thorugh `Finnhub`
-  
-The following commands can be improved by setting Environment Tools:
-- `gptcli prompt`
-- `gptcli chat`
+#### 参数:
 
-Envrionment Variables:
-```unix
-  # Sets the SERPAPI_API_KEY, enables search functionality
-  > gptcli config serpapi <key> 
+apiKey - 你的OpenAI API密钥。
+query - 搜索查询字符串。
+context - 与查询相关的上下文信息。
+engine - 可选。使用的OpenAI引擎，默认为 'davinci'。
+maxTokens - 可选。生成的最大令牌数，默认为 150。
 
-  # Sets the VALUESERP_API_KEY, enables search functionality
-  > gptcli config valueserp <key> 
+#### 返回值:
 
-  # Sets the FINNHUB_API_KEY, enables live stock price functionality
-  > gptcli config finnhub <key>
-```
+返回一个 Promise，它在成功时解析为搜索结果。
 
-## Help
-#
-For more information run the `gptcli help` command.
+### buildPrompt
+内部方法，用于构建用于搜索的提示。
+
+#### 参数:
+
+query - 搜索查询字符串。
+context - 与查询相关的上下文信息。
+返回值:
+
+返回构建好的提示字符串。
+
+### executeSearch
+内部方法，用于执行搜索。
+
+####  参数:
+
+prompt - 构建好的提示字符串。
+apiKey - 你的OpenAI API密钥。
+engine - 使用的OpenAI引擎。
+maxTokens - 生成的最大令牌数。
+返回值:
+
+返回一个 Promise，它在成功时解析为搜索结果。
+
+### 缓存
+为了提高效率，searchWorkflow 使用 node-cache 来缓存搜索结果。默认的标准生存时间（stdTTL）是 100 秒，检查周期（checkperiod）是 120 秒。
+
+### 请求限流
+searchWorkflow 使用 Bottleneck 来限制对API的请求频率，以避免达到API速率限制。默认设置为每秒最多3个请求。
+
+### 注意事项
+请确保不要泄漏你的 OPENAI_API_KEY。
+遵守 OpenAI 使用条款和请求限制。
+### 支持
+如果你在使用 searchWorkflow 时遇到任何问题，可以检查项目的 README.md 或提交一个issue到项目的仓库。
+
+
+

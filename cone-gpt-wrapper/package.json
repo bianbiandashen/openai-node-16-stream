@@ -1,57 +1,114 @@
 {
-  "name": "gpt-npm-cli",
-  "version": "0.1.5",
-  "description": "\"# gpt-npm-cli\"",
-  "exports": "./index.js",
-  "type": "module",
+  "name": "@alife/cone-gpt-wrapper",
+  "version": "0.0.18",
+  "description": "",
+  "module": "es/index.js",
+  "main": "lib/index.js",
+  "unpkg": "dist/cone-gpt-wrapper",
+  "stylePath": "style.js",
+  "types": "lib/index.d.ts",
+  "author": "Cone - Cainiao Inc,Alibaba group.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.alibaba-inc.com/cone-group/cone-gpt-wrapper.git"
+  },
   "engines": {
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "npx tsc",
-    "start": "npx tsc & node ./dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cone start",
+    "build": "cone build",
+    "ssb": "cone start-storybook -p 7800",
+    "prepublishOnly": "tnpm run build",
+    "prepare": "husky install && ts-patch install",
+    "pre-commit": "lint-staged",
+    "commit-msg": "commitlint --edit"
   },
-  "bin": {
-    "gptcli": "./dist/index.js"
+  "lint-staged": {
+    "*.{json,md,html}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint",
+      "prettier --write --ignore-unknown"
+    ],
+    "*.{css,scss}": [
+      "stylelint",
+      "prettier --write --ignore-unknown"
+    ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Ibtesam-Mahmood/gpt-npm-cli.git"
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "dist",
+    "es",
+    "lib",
+    "src",
+    "stories",
+    "multiple-docs",
+    "locale",
+    ".*",
+    "*.*"
+  ],
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ibtesam-Mahmood/gpt-npm-cli/issues"
-  },
-  "homepage": "https://github.com/Ibtesam-Mahmood/gpt-npm-cli#readme",
-  "dependencies": {
-    "@dqbd/tiktoken": "^1.0.3",
-    "@pinecone-database/pinecone": "^0.0.10",
-    "@stoqey/finnhub": "^0.3.4",
-    "@supabase/supabase-js": "^2.12.1",
-    "@types/cheerio": "^0.22.31",
-    "axios": "^1.3.4",
-    "cheerio": "^1.0.0-rc.12",
-    "chromadb": "^1.3.1",
-    "commander": "^10.0.0",
-    "dotenv": "^16.0.3",
-    "figlet": "^1.5.2",
-    "hnswlib-node": "^1.4.2",
-    "install": "^0.13.0",
-    "langchain": "^0.0.50",
-    "npm": "^9.6.2",
-    "pinecone-client": "^1.1.0",
-    "serpapi": "^1.1.1"
-  },
+  "keywords": [
+    "cainiao",
+    "react",
+    "component"
+  ],
+  "dependencies": {},
   "devDependencies": {
-    "@huggingface/inference": "^1.6.0",
-    "@types/figlet": "^1.5.5",
-    "@types/node": "^18.15.0",
-    "cohere-ai": "^5.1.0",
-    "redis": "^4.6.5",
-    "typeorm": "^0.3.13",
-    "typescript": "^5.0.4"
-  }
+    "@cainiaofe/cn-ui": "^0.x",
+    "@cainiaofe/cn-ui-theme-light": "^1.x",
+    "@ali/visualengine": "^5.4.1",
+    "@ali/visualengine-utils": "^5.1.6",
+    "@alib/build-scripts": "^0.1.32",
+    "@alicd/build-plugin-component-babel-plugins": "^0.4.0",
+    "@alicd/build-plugin-cone-component": "^0.4.2",
+    "@alicd/eslint-config-cone": "^0.x",
+    "@alicd/storybook-config-cone": "^1.x",
+    "@alicd/storybook-decorator-cone": "^1.x",
+    "@alicd/ts-config-cone": "^0.1.24",
+    "cn-request": "^1.x",
+    "@alife/cn-ui": "^0.x",
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
+    "@storybook/addon-docs": "^6.3.2",
+    "@storybook/react": "^6.3.12",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "cn-build-plugin-component": "^1.x",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.5.0",
+    "prettier": "^2.8.4",
+    "prop-types": "^15.7.2",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "postcss-scss": "^4.0.6",
+    "sass": "^1.23.2",
+    "stylelint": "^15.1.0",
+    "stylelint-config-ali": "^0.4.2",
+    "stylelint-scss": "^4.4.0",
+    "ts-patch": "^2.0.1",
+    "typescript": "^4.4.4",
+    "typescript-transform-paths": "^3.3.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.anpm.alibaba-inc.com"
+  },
+  "resolutions": {
+    "webpack": "^4"
+  },
+  "homepage": "https://unpkg.alibaba-inc.com/@alife/cone-gpt-wrapper@0.0.18/build/index.html"
 }

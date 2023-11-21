@@ -1,18 +1,25 @@
 {
+  "include": ["src", "stories", "*.d.ts"],
+  "exclude": ["node_modules", "build", "dist", "es", "lib"],
+  "types": ["node", "jest"],
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "strict": true,
-    "target": "ES2020",
-    "module": "nodenext",
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node16",
-    "skipLibCheck": true,
+    "jsx": "react",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "allowJs": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
     "paths": {
-      "cheerio": [
-          "./node_modules/cheerio/lib/index.d.ts"
-      ]
-  }
+      "src/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      "$src/*": ["./src/*"],
+      "@alife/cn-domain-watermark": ["./src/index"]
+    },
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ]
   }
 }
