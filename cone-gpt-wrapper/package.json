@@ -1,6 +1,6 @@
 {
   "name": "@alife/cone-gpt-wrapper",
-  "version": "0.0.18",
+  "version": "0.0.28",
   "description": "",
   "module": "es/index.js",
   "main": "lib/index.js",
@@ -59,7 +59,11 @@
     "react",
     "component"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@alife/cn-request": "^1.2.4",
+    "bottleneck": "^2.19.5",
+    "node-cache": "^5.1.2"
+  },
   "devDependencies": {
     "@cainiaofe/cn-ui": "^0.x",
     "@cainiaofe/cn-ui-theme-light": "^1.x",
@@ -110,5 +114,5 @@
   "resolutions": {
     "webpack": "^4"
   },
-  "homepage": "https://unpkg.alibaba-inc.com/@alife/cone-gpt-wrapper@0.0.18/build/index.html"
+  "homepage": "https://unpkg.alibaba-inc.com/@alife/cone-gpt-wrapper@0.0.28/build/index.html"
 }
